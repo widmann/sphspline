@@ -50,6 +50,7 @@ end
 [th, phi, r] = cart2sph(E(:, 1), E(:, 2), E(:, 3));
 
 if any(abs(r - 1) > thresh)
+    warning('Channel coordinates not located on unit sphere surface. Recentering and projecting.')
     [E(:, 1), E(:, 2), E(:, 3)] = chancenter(E(:, 1), E(:, 2), E(:, 3), []); % Re-center
     [th, phi] = cart2sph(E(:, 1), E(:, 2), E(:, 3));
     [E(:, 1), E(:, 2), E(:, 3)] = sph2cart(th, phi, 1); % Project to unit sphere
