@@ -16,8 +16,8 @@
 %               Laplacian) {default 'sp'}
 %   lambda    - scalar smoothing factor (commonly used values are 1e-7
 %               for sp and 1e-5 for scd) {default 0}
-%   nterms    - scalar number of terms {default 50}
-%   m         - scalar m {default 4}
+%   nTerms    - scalar int > 0 number of terms {default 50}
+%   m         - scalar int > 1 m {default 4}
 %
 % Outputs:
 %   Ginv      - nbchan + 1 by nbchan + 1 matrix padded inverse of
