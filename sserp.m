@@ -79,13 +79,16 @@ HEAD_RADIUS = 0.1; % meter
 SCALE = 1e-3; % µA/m^3 to mA/m^3 and µV/m^2 to mV/m^2
 
 % Interpolation
-if strcmpi(type, 'scd')
-    % Perrin et al., 1989, eqn. (5), negative 2D spherical laplacian
-    erpData = -g * C(2:end, :) / HEAD_RADIUS ^ 2 * CONDUCTIVITY * SCALE;
-elseif strcmpi(type, 'lap')
-    % Perrin et al., 1989, eqn. (5), negative 2D spherical laplacian
-    erpData = -g * C(2:end, :) / HEAD_RADIUS ^ 2 * SCALE;
-else
-    % Perrin et al., 1989, eqn. (1)
-    erpData = C(ones(1, size(g, 1)), :) + g * C(2:end, :);
+switch type
+    case 'sp'
+        % Perrin et al., 1989, eqn. (1)
+        erpData = C(ones(1, size(g, 1)), :) + g * C(2:end, :);
+    case 'scd'
+        % Perrin et al., 1989, eqn. (5), negative 2D spherical laplacian
+        erpData = -g * C(2:end, :) / HEAD_RADIUS ^ 2 * CONDUCTIVITY * SCALE;
+    case 'lap'
+        % Perrin et al., 1989, eqn. (5), negative 2D spherical laplacian
+        erpData = -g * C(2:end, :) / HEAD_RADIUS ^ 2 * SCALE;
+    otherwise
+        error('Unrecognized or ambiguous interpolation type specified.');
 end

@@ -115,6 +115,8 @@ switch type
         g = gfcn(x, nTerms, m); % Perrin et al., 1989, eqn. (3)
     case {'scd' 'lap'}
         g = gfcn(x, nTerms, m - 1); % Perrin et al., 1990, eqn. after eqn. (5)
+    otherwise
+        error('Unrecognized or ambiguous interpolation type specified.');
 end
 
 function [G] = gfcn(x, nTerms, m)
