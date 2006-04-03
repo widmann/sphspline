@@ -177,12 +177,4 @@ if EEG.trials > 1
 end
 
 % History string
-com = sprintf('%s = pop_repchan(%s', inputname(1), inputname(1));
-for c = fieldnames(Arg)'
-    if ischar(Arg.(c{:}))
-        com = [com sprintf(', ''%s'', ''%s''', c{:}, Arg.(c{:}))];
-    else
-        com = [com sprintf(', ''%s'', %s', c{:}, mat2str(Arg.(c{:})))];
-    end
-end
-com = [com ');'];
+com = [inputname(1) ' = pop_repchan(' inputname(1) ', ' arg2str(Arg) ');'];
