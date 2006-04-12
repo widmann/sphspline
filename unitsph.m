@@ -14,7 +14,7 @@
 % Outputs:
 %   E     - nbchan by 3 matrix with cartesian channel location
 %           coordinates x, y, z re-centered to best fitting sphere and
-%           projected to unit sphere surface 
+%           projected to unit sphere surface
 %
 % Author: Andreas Widmann, University of Leipzig, 2006
 %

@@ -25,7 +25,7 @@
 %
 % Note:
 %   Channel coordinates should be located on the surface of a (unit)
-%   sphere. 
+%   sphere.
 %
 % Author: Andreas Widmann, University of Leipzig, 2006
 %

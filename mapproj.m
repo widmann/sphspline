@@ -36,7 +36,7 @@
 %       http://mathworld.wolfram.com/OrthographicProjection.html
 %   [3] Weisstein, E. W. (1999). Gnomonic Projection. Retrieved March
 %       19, 2006, from
-%       http://mathworld.wolfram.com/GnomonicProjection.html 
+%       http://mathworld.wolfram.com/GnomonicProjection.html
 %   [4] Weisstein, E. W. (1999). Azimuthal Equidistant Projection.
 %       Retrieved March 19, 2006, from
 %       http://mathworld.wolfram.com/AzimuthalEquidistantProjection.html

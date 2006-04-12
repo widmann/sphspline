@@ -159,7 +159,7 @@ for iBlock = 1 : length(blockArray) - 1
 
     % C matrix
     C = sserpweights(EEG.data(:, blockArray(iBlock) : blockArray(iBlock + 1) - 1), Ginv);
-    
+
     % Interpolation
     EEG.data(:, blockArray(iBlock) : blockArray(iBlock + 1) - 1) = sserp(C, g, Arg.type);
 

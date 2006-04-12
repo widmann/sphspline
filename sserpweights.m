@@ -1,5 +1,5 @@
 % sserpweights() - Compute C matrix used for spherical spline
-%                  interpolation 
+%                  interpolation
 %
 % Usage:
 %   >> C = sserpweights(data, Ginv)
@@ -28,7 +28,7 @@
 %       dnl.ucsf.edu/users/dweber/dweber_docs/eeg_scd.html
 %   [5] Ferree, T. C. (2000). Spline Interpolation of the Scalp EEG.
 %       Retrieved March 26, 2006, from
-%       www.egi.com/Technotes/SplineInterpolation.pdf 
+%       www.egi.com/Technotes/SplineInterpolation.pdf
 %   [6] Ferree, T. C., & Srinivasan, R. (2000). Theory and Calculation
 %       of the Scalp Surface Laplacian. Retrieved March 26, 2006, from
 %       http://www.egi.com/Technotes/SurfaceLaplacian.pdf
