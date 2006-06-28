@@ -76,7 +76,7 @@ if nargin < 2
               {'style' 'edit' 'string' ''} {} ...
               {'style' 'text' 'string' 'm {default 4}:'} ...
               {'style' 'edit' 'string' ''} {}};
-    result = inputgui(uigeom, uilist, 'pophelp(''addicachan'')', 'Add channel to ICA -- pop_addchanica()');
+    result = inputgui(uigeom, uilist, 'pophelp(''pop_addchanica'')', 'Add channel to ICA -- pop_addchanica()');
     if isempty(result), return; end
 
     Arg = {};
