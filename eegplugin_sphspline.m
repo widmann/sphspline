@@ -33,7 +33,7 @@
 
 function vers = eegplugin_sphspline(fig, trystrs, catchstrs)
 
-    vers = 'sphspline0.1';
+    vers = 'sphspline0.11';
     if nargin < 3
         error('eegplugin_sphspline requires 3 arguments');
     end
