@@ -168,7 +168,8 @@ isErp = ~sum(isnan(F), 2); % NaNs slow down interpolation by factor 10 to 100
 erpData = NaN(length(x), length(x));
 
 % Open figure
-figure('color', COLOR_EEGLAB_BACKGROUND, 'Colormap', colormap(Arg.colormap))
+hfig = figure;
+set(hfig, 'color', COLOR_EEGLAB_BACKGROUND, 'Colormap', colormap(Arg.colormap))
 
 zMin = []; zMax = [];
 
