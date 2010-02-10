@@ -139,7 +139,11 @@ end
 if ~isfield(Arg, 'maplimits') || isempty(Arg.maplimits)
     Arg.maplimits = 'absmax';
 end
-Units.erp.sp = 'µV';
+if ~isfield(Arg, 'bgColor') || isempty(Arg.bgColor)
+    Arg.bgColor = COLOR_EEGLAB_BACKGROUND;
+end
+
+Units.erp.sp = 'ï¿½V';
 Units.erp.scd = 'mA/m^3';
 Units.erp.lap = 'mV/m^2';
 Units.comp.sp = '';
@@ -169,7 +173,7 @@ erpData = NaN(length(x), length(x));
 
 % Open figure
 hfig = figure;
-set(hfig, 'color', COLOR_EEGLAB_BACKGROUND, 'Colormap', colormap(Arg.colormap))
+set(hfig, 'color', Arg.bgColor, 'Colormap', colormap(Arg.colormap))
 
 zMin = []; zMax = [];
 
