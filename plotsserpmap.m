@@ -51,7 +51,6 @@ if nargin < 5
 end
 
 % Defaults
-COLOR_EEGLAB_BACKGROUND = [.93 .96 1];
 ear = [[ 0.492;   0.51;  0.518; 0.5299; 0.5419;    0.54;   0.547;   0.532;    0.51;   0.484], ...
        [0.0955; 0.1175; 0.1183; 0.1146; 0.0955; -0.0055; -0.0932; -0.1313; -0.1384; -0.1199]] * 2 * headRadius; % from topoplot
 nose = [[  0.09; 0.02;     0; -0.02;  -0.09], ...
@@ -80,10 +79,11 @@ set(h.axis, ...
 [foo, h.contour] = contour(x, x, zData, 3, 'LineColor', [0 0 0]);
 
 % Mask convex hull
+bgColor = get(get(h.axis, 'Parent'), 'Color');
 patch([x(1);                     x(1);   x(end); x(end); x(1); x(1);                     ePrime(convexHull, 1)], ...
       [ePrime(convexHull(1), 2); x(end); x(end); x(1);   x(1); ePrime(convexHull(1), 2); ePrime(convexHull, 2)], ...
       ones(length(convexHull) + 6, 1), ...
-      COLOR_EEGLAB_BACKGROUND, 'EdgeColor', COLOR_EEGLAB_BACKGROUND);
+      bgColor, 'EdgeColor', bgColor);
 
 % Electrodes
 plot3(ePrime(:, 1), ePrime(:, 2), ones(size(ePrime, 1), 1), 'k.')
