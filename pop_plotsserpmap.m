@@ -2,10 +2,10 @@
 %                      interpolation
 %
 % Usage:
-%   >> [EEG, com] = pop_plotsserpmap(EEG); % pop-up window mode
-%   >> [EEG, com] = pop_plotsserpmap(EEG, 'parameter1', value1, ...
-%                                         'parameter2', value2, ...
-%                                         'parametern', valuen);
+%   >> com = pop_plotsserpmap(EEG); % pop-up window mode
+%   >> com = pop_plotsserpmap(EEG, 'parameter1', value1, ...
+%                                  'parameter2', value2, ...
+%                                  'parametern', valuen);
 %
 % Inputs:
 %   EEG           - EEGLAB EEG structure
@@ -30,6 +30,7 @@
 %                   (zero-symmetric color mapping), 'maxmin' (color
 %                   mapping scaled to global extrema), or [min max]
 %                   {default 'absmax'}
+%   'levelList'   - vector contour plot levels or string 'YTick'
 %
 % Outputs:
 %   com           - history string
@@ -65,8 +66,6 @@
 % $Id$
 
 function [com] = pop_plotsserpmap(EEG, varargin)
-
-com = '';
 
 % Arguments
 if nargin < 1
@@ -143,7 +142,7 @@ if ~isfield(Arg, 'bgColor') || isempty(Arg.bgColor)
     Arg.bgColor = COLOR_EEGLAB_BACKGROUND;
 end
 
-Units.erp.sp = '�V';
+Units.erp.sp = '\muV';
 Units.erp.scd = 'mA/m^3';
 Units.erp.lap = 'mV/m^2';
 Units.comp.sp = '';
@@ -212,37 +211,31 @@ if strcmpi(Arg.maplimits, 'absmax')
 elseif strcmpi(Arg.maplimits, 'maxmin')
     Arg.maplimits = [min(zMin) max(zMax)];
 end
-set([h.axis], 'Clim', Arg.maplimits);
+fprintf(1, 'pop_plotsserp info: global min = %.3f, global max = %.3f\n', min(zMin), max(zMax));
 
 % Colorbar
 if size(Arg.items, 2) > 1
-    subplot(Arg.rowsCols(1), Arg.rowsCols(2), Arg.rowsCols(1) * Arg.rowsCols(2), 'Visible', 'off');
-    h(end + 1).axis = colorbar('v6');
-    set(get(h(end).axis, 'Children'), 'YData', [Arg.maplimits(1) + diff(Arg.maplimits) / 128 Arg.maplimits(2) - diff(Arg.maplimits) / 128])
-    set(h(end).axis, 'YLim', Arg.maplimits)
-    drawnow
-else
-    h(end + 1).axis = colorbar('v6');
+    h(end + 1).axis = subplot(Arg.rowsCols(1), Arg.rowsCols(2), Arg.rowsCols(1) * Arg.rowsCols(2), 'Visible', 'off');
 end
-set(h(end).axis, 'YTickMode', 'manual', 'NextPlot', 'Add')
-
-% Adjust contour line levels to colorbar ticks
-levelList = get(h(end).axis, 'YTick');
-if length(levelList(levelList > min(zMin) & levelList < max(zMax))) < 4
-    tickStep = diff(levelList(1:2)) / 4;
-    levelList = levelList(1) - 3 * tickStep : tickStep : levelList(end) + 3 * tickStep;
-elseif length(levelList(levelList > min(zMin) & levelList < max(zMax))) < 6
-    tickStep = diff(levelList(1:2)) / 2;
-    levelList = levelList(1) - tickStep : tickStep : levelList(end) + tickStep;
-end
-levelList = levelList(levelList > min(zMin) & levelList < max(zMax));
+set([h.axis], 'Clim', Arg.maplimits);
+h(end).colorbar = colorbar('peer', h(end).axis);
 
 % Set contour lines
-set([h(1:end - 1).contour], 'LevelList', levelList);
+levelStepArray = get([h(1:end - 1).contour], 'LevelStep');
+levelStepMax = max([levelStepArray{:}]);
+fprintf(1, 'pop_plotsserp info: default contour plot LevelStep size: %f\n', levelStepMax);
 
-% Add contour lines to colorbar
-axes(h(end).axis);
-[foo, h(end).contour] = contour(get(h(end).axis, 'XLim'), [Arg.maplimits], [Arg.maplimits' Arg.maplimits'], levelList, 'LineColor', [0 0 0]);
+if isfield(Arg, 'levelList')
+    if strcmpi(Arg.levelList, 'YTick')
+        Arg.levelList = get(h(end).colorbar, 'YTick');
+    end
+    set([h(1:end - 1).contour], 'LevelList', Arg.levelList);
+else
+    set([h(1:end - 1).contour], 'LevelStep', levelStepMax);
+    Arg.levelList = get([h(1:end - 1).contour], 'LevelList');
+    Arg.levelList = min([Arg.levelList{:}]):levelStepMax:max([Arg.levelList{:}]);
+    set([h(1:end - 1).contour], 'LevelList', Arg.levelList);
+end
 
 % Captions
 if strcmpi(Arg.plot, 'erp')
@@ -259,8 +252,10 @@ if ~iscell(title), title = {title}; end
 set([title{:}], {'String'}, captions, 'Visible', 'on')
 
 % Units
-xLabel = get([h(end).axis], 'XLabel');
+xLabel = get([h(end).colorbar], 'XLabel');
 set(xLabel, 'String', Units.(Arg.plot).(Arg.type), 'Visible', 'on')
 
 % History string
-com = ['pop_plotsserpmap(' inputname(1) ', ' arg2str(Arg) ');'];
+if nargout > 0
+    com = ['pop_plotsserpmap(' inputname(1) ', ' arg2str(Arg) ');'];
+end

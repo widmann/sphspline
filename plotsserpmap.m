@@ -76,7 +76,8 @@ set(h.axis, ...
 [foo, h.contourf] = contourf(x, x, zData, 64, 'LineStyle', 'none');
 
 % Contour lines
-[foo, h.contour] = contour(x, x, zData, 3, 'LineColor', [0 0 0]);
+% [foo, h.contour] = contour(x, x, zData, 3, 'LineColor', [0 0 0]);
+[foo, h.contour] = contour(x, x, zData, 'LineColor', [0 0 0]);
 
 % Mask convex hull
 bgColor = get(get(h.axis, 'Parent'), 'Color');
