@@ -221,7 +221,8 @@ set([h.axis], 'Clim', Arg.maplimits);
 h(end).colorbar = colorbar('peer', h(end).axis);
 
 % Set contour lines
-levelStepArray = get([h(1:end - 1).contour], 'LevelStep');
+levelStepArray = get([h(1:size(Arg.items, 2)).contour], 'LevelStep');
+if ~iscell(levelStepArray), levelStepArray = {levelStepArray}; end
 levelStepMax = max([levelStepArray{:}]);
 fprintf(1, 'pop_plotsserp info: default contour plot LevelStep size: %f\n', levelStepMax);
 
@@ -229,8 +230,8 @@ if isfield(Arg, 'levelList')
     if strcmpi(Arg.levelList, 'YTick')
         Arg.levelList = get(h(end).colorbar, 'YTick');
     end
-    set([h(1:end - 1).contour], 'LevelList', Arg.levelList);
-else
+    set([h(1:size(Arg.items, 2)).contour], 'LevelList', Arg.levelList);
+elseif size(Arg.items, 2) > 1 % same LevelList on all subplots
     set([h(1:end - 1).contour], 'LevelStep', levelStepMax);
     Arg.levelList = get([h(1:end - 1).contour], 'LevelList');
     Arg.levelList = min([Arg.levelList{:}]):levelStepMax:max([Arg.levelList{:}]);
@@ -247,7 +248,7 @@ if strcmpi(Arg.plot, 'erp')
 else
     captions = cellstr(num2str(Arg.items', '%d'));
 end
-title = get([h(1:end - 1).axis], 'Title');
+title = get([h(1:size(Arg.items, 2)).axis], 'Title');
 if ~iscell(title), title = {title}; end
 set([title{:}], {'String'}, captions, 'Visible', 'on')
 
