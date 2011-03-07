@@ -17,7 +17,7 @@
 %                   potential), 'scd' (scalp current density), or 'lap'
 %                   (surface Laplacian) {default 'sp'}
 %   'items'       - scalar, vector, or 2 by n matrix items to plot. Time
-%                   points (s) (window start and end times in rows) or
+%                   points (ms) (window start and end times in rows) or
 %                   component numbers
 %   'lambda'      - scalar smoothing factor (commonly used values are
 %                   1e-7 for sp and 1e-5 for scd) {default 0}
